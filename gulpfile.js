@@ -1,5 +1,8 @@
 var gulp = require('gulp');
 var del = require('del');
+var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
+var rename = require('gulp-rename');
 
 gulp.task('default',['mystask1', 'mystask2'], function(){
   console.log('my default task');
@@ -65,11 +68,12 @@ gulp.task('clean_output2', function(cb){
       console.log('del done.')
       // console.log('Deleted files/folders:\n', paths.join('\n'));
       cb();
-    });
-    // .then(function(){
-    //   console.log('ddd')
-    //   cb();
-    // })
+    })
+    //.then(function(){
+    //  會依序執行，上面執行完才會執行這邊
+    //  console.log('ddd')
+    //  cb();
+    //})
 });
 
 // Add watch function
@@ -77,5 +81,21 @@ gulp.task('watch', function(){
   gulp.watch(['./app/**/*.js'], ['cleanAndCreate']);
 });
 
+// concat js to module.js and bundles.js
+gulp.task('concat', function(){
+  gulp.src('./app/**/*.module.js')
+    .pipe(gulp.dest('assets/src'))
+    .pipe(concat('app.module.js'))
+    .pipe(uglify())
+    .pipe(rename({extname:'.min.js'}))
+    .pipe(gulp.dest('assets'));
+
+  gulp.src(['./app/**/*.js', '!./app/**/*.module.js'])
+    .pipe(gulp.dest('assets/src'))
+    .pipe(concat('app.bundles.js'))
+    .pipe(uglify({mangle: false}))
+    .pipe(rename({extname:'.min.js'}))
+    .pipe(gulp.dest('assets'));
+});
 
 
