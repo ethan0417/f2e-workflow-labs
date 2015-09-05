@@ -42,3 +42,8 @@ gulp.task('output2', function(){
   gulp.src('./assets/vendor/bootstrap/**/*.js', {base:'assets/vendor'})
     .pipe(gulp.dest('output2'))
 })
+// src 可以讀取陣列，所以變成陣列就可以取得 js 和 css
+gulp.task('output3', function(){
+  gulp.src(['./assets/vendor/**/*.js', './assets/vendor/**/*.css'], {base:'assets/vendor'})
+    .pipe(gulp.dest('output3'))
+})
