@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var del = require('del');
 
 gulp.task('default',['mystask1', 'mystask2'], function(){
   console.log('my default task')
@@ -46,4 +47,9 @@ gulp.task('output2', function(){
 gulp.task('output3', function(){
   gulp.src(['./assets/vendor/**/*.js', './assets/vendor/**/*.css'], {base:'assets/vendor'})
     .pipe(gulp.dest('output3'))
+})
+
+// clean files
+gulp.task('clean', function(){
+  del(['output2/bootstrap/**', '!output2/bootstrap']);
 })
