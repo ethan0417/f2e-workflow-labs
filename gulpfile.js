@@ -65,15 +65,17 @@ gulp.task('clean_output2', function(cb){
       console.log('del done.')
       // console.log('Deleted files/folders:\n', paths.join('\n'));
       cb();
-    })
+    });
     // .then(function(){
     //   console.log('ddd')
     //   cb();
     // })
-})
+});
 
-
-
+// Add watch function
+gulp.task('watch', function(){
+  gulp.watch(['./app/**/*.js'], ['cleanAndCreate']);
+});
 
 
 
